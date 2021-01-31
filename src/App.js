@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Navbar, NavbarBrand } from 'reactstrap';
-import Directory from './components/DirectoryComponent';
+import Directory from './components/DirectoryComponent.js';
 import './App.css';
-import { CAMPSITES } from './shared/campsites';
+import { CAMPSITES } from './shared/campsites.js';
 
 class App extends Component {
     constructor(props) {
