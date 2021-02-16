@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, {Component} from 'react';
 import { Card, CardImg, CardText, CardBody} from 'reactstrap';
-import { Breadcrumb, BreadcrumbItem, Button, Modal, ModalHeader, ModalBody, Label, Row, Col} from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Button, Modal, ModalHeader, ModalBody, Label} from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { LocalForm, Control, Errors } from 'react-redux-form';
+
 
 const required = val => val && val.length;
 const maxLength = len => val => !val || (val.length <= len);
@@ -26,14 +27,17 @@ class CommentForm extends Component {
         });
     }
 
-    handleSubmit = (values) => {
-        console.log(values);
-        alert('Current state is: ' + JSON.stringify(values));
+    handleSubmit(values) {
+        this.toggleModal();
+        this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text);
     }
 
     render() {
         return (
             <div>
+                <Button onClick={this.toggleModal} outline fa-lg>
+                    <i className="fa fa-pencil"></i> Submit Comment
+                </Button>
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
                     <ModalBody>
@@ -50,7 +54,7 @@ class CommentForm extends Component {
                                         </Control.select>
                                         
                                     </div>
-                                    <div>                              
+                                    <div className ="form-group">                              
                                         <Label htmlFor="author">Author</Label>
                                         <Control.text 
                                         className="form-control" 
@@ -74,7 +78,7 @@ class CommentForm extends Component {
                                         }}
                                     />
                                     </div> 
-                                    <div>
+                                    <div className="form-group">
                                         <Label htmlFor="comment">Comment</Label>
                                         <Control.textarea className="form-control" name="comment" model=".comment" id="comment" rows={6}  /> 
                                     </div>
@@ -84,15 +88,12 @@ class CommentForm extends Component {
                         </LocalForm>
                     </ModalBody>
                 </Modal>
-                <Button onClick={this.toggleModal}outline fa-lg>
-                    <i className="fa fa-pencil"></i> Submit Comment
-                </Button>
             </div>
         );
     }
 }
 
-function RenderComments({comments}) {
+function RenderComments({comments, addComment, campsiteId}) {
         if(comments) {
             return (
                 <div className = "col-md-5 m-1">
@@ -105,7 +106,7 @@ function RenderComments({comments}) {
                             </div>
                         )
                     })}
-                    <CommentForm />
+                    <CommentForm campsiteId={campsiteId} addComment={addComment} />
                 </div>
             )
         }
@@ -144,7 +145,11 @@ function CampsiteInfo(props) {
             </div>
                     <div className = "row">
                         <RenderCampsite campsite={props.campsite} />
-                        <RenderComments comments={props.comments} />
+                        <RenderComments 
+                        comments={props.comments}
+                        addComment={props.addComment} 
+                        campsiteId={props.campsite.id}
+                        />
                     </div>
                 </div>
             )
