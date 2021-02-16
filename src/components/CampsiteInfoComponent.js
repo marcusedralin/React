@@ -85,7 +85,7 @@ class CommentForm extends Component {
                     </ModalBody>
                 </Modal>
                 <Button onClick={this.toggleModal}outline fa-lg>
-                    <i className="fa-pencil"></i>Submit Comment
+                    <i className="fa fa-pencil"></i> Submit Comment
                 </Button>
             </div>
         );
