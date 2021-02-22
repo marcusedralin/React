@@ -1,4 +1,3 @@
-import { actions, actionTypes } from "react-redux-form";
 import * as ActionTypes from './ActionTypes';
 
 export const Campsites = (state = {

@@ -28,7 +28,7 @@ class CommentForm extends Component {
         this.setState({
             isModalOpen: !this.state.isModalOpen
         });
-    }
+    };
 
     handleSubmit(values) {
         this.toggleModal();
@@ -44,18 +44,17 @@ class CommentForm extends Component {
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
                     <ModalBody>
-                        <LocalForm onSubmit={values => this.handleSubmit(values)}>
+                        <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
                             <div className="form-group">
                                     <div className="form-group">
                                         <Label htmlFor="rating">Rating</Label>
                                         <Control.select className="form-control" name="rating" model=".rating" id="rating">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
                                         </Control.select>
-                                        
                                     </div>
                                     <div className ="form-group">                              
                                         <Label htmlFor="author">Author</Label>
@@ -85,7 +84,7 @@ class CommentForm extends Component {
                                         <Label htmlFor="comment">Comment</Label>
                                         <Control.textarea className="form-control" name="comment" model=".comment" id="comment" rows={6}  /> 
                                     </div>
-                                        <Button type="submit" className="bg-primary">Submit</Button>
+                                        <Button type="submit" value="submit" className="bg-primary">Submit</Button>
                             </div>
                                     
                         </LocalForm>
@@ -107,10 +106,10 @@ function RenderComments({comments, postComment, campsiteId}) {
                                 <Fade in key={comment.id}>
                                     <div>
                                         <p>{comment.text}</p>
-                                        <p>{comment.author} - {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
+                                        <p>{comment.author} - -{" "} {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
                                     </div>
                                 </Fade>
-                            )
+                            );
                         })}
                     </Stagger>
                     <CommentForm campsiteId={campsiteId} postComment={postComment} />

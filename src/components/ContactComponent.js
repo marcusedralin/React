@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem,
     Button, Label, Col, Row} from 'reactstrap';
-import { Control, Form, Errors, actions } from 'react-redux-form';
+import { Control, Form, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 
 const required = val => val && val.length;
@@ -37,9 +37,11 @@ class Contact extends Component {
 
 
     handleSubmit(values) {
-        console.log('Current state is: ' + JSON.stringify(values));
-        alert('Current state is: ' + JSON.stringify(values));
+        // console.log('Current state is: ' + JSON.stringify(values));
+        // alert('Current state is: ' + JSON.stringify(values));
+        this.props.postFeedback(values);
         this.props.resetFeedbackForm();
+        
     }
 
     render() {
@@ -48,14 +50,14 @@ class Contact extends Component {
             <div className="container">
                 <div className="row">
                     <div className="col">
-                    <Breadcrumb>
-                                <BreadcrumbItem>
-                                    <Link to="/home">Home</Link>
-                                </BreadcrumbItem>
-                                <BreadcrumbItem>
-                                    <Link active>Contact Us</Link>
-                                </BreadcrumbItem>
-                            </Breadcrumb>   
+                        <Breadcrumb>
+                            <BreadcrumbItem>
+                                <Link to="/home">Home</Link>
+                            </BreadcrumbItem>
+                            <BreadcrumbItem>
+                                <Link active>Contact Us</Link>
+                            </BreadcrumbItem>
+                        </Breadcrumb>   
                         <h2>Contact Us</h2>
                         <hr />
                     </div>
@@ -82,7 +84,9 @@ class Contact extends Component {
                         <hr />
                     </div>
                     <div className="col-md-10">
-                        <Form model="feedbackForm" onSubmit={values => this.handleSubmit(values)}>
+                        <Form 
+                        model="feedbackForm" 
+                        onSubmit={values => this.handleSubmit(values)}>
                             <Row className="form-group">
                                 <Label htmlFor="firstName" md={2}>First Name</Label>
                                 <Col md={10}>
